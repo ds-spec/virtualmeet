@@ -1,0 +1,11 @@
+import { Grip, Moon } from "lucide-react";
+
+export default function Navbar() {
+  return <div className="flex justify-between items-center px-8 py-6">
+    <h3 className="text-white font-bold text-xl">Flick.AI</h3>
+    <div className="flex items-center gap-4">
+      <Moon color="#fff" size={"1.2em"} className="cursor-pointer hover:scale-110 transition-transform duration-300" />
+      <Grip color="#fff" size={"1.2em"} className="cursor-pointer hover:scale-110 transition-transform duration-300" />
+    </div>
+  </div>
+}
