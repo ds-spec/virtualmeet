@@ -1,7 +1,9 @@
-import { ThemeProvider } from "@/components/theme-provider";
+
+import ImageToggler from "@/components/ImageToggler";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -20,20 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" >
-      <body style={{
-        background: "url(/bg.webp) no-repeat",
-        backgroundSize: "cover",
-      }}
+      <body
         className={`${bricolage_grotesque.className} dark:bg-black bg-white antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
+          <ImageToggler />
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

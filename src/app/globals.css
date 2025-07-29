@@ -121,6 +121,12 @@
   }
 }
 
+@layer utilities {
+  .text-utility {
+    @apply dark:border-white/40 border-black/40 dark:text-white text-black !text-center cursor-pointer focus:outline-none rounded-lg backdrop-blur-lg px-5 bg-[rgba(229,231,235,0.3)] dark:bg-[rgba(0,0,0,0.05)] transition-colors duration-300 max-h-[30px] text-[12px];
+  }
+}
+
 .btn {
   appearance: none;
   -webkit-appearance: none; /* Safari-specific reset */
