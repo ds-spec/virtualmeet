@@ -1,12 +1,17 @@
 
 import ImageToggler from "@/components/ImageToggler";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
+})
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 })
 
 
@@ -23,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body
-        className={`${bricolage_grotesque.className} dark:bg-black bg-white antialiased`}
+        className={`${bricolage_grotesque.className} ${inter.variable} dark:bg-black bg-white antialiased`}
       >
         <Providers>
           <ImageToggler />
