@@ -1,10 +1,28 @@
 "use client";
 
-import { ArrowUpRight, Send } from "lucide-react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import useTweet from "@/hooks/useTweet";
+import { Send } from "lucide-react";
+import { useRef } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Textarea } from "./ui/textarea";
 
 export default function Hero() {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const adjustTextAreaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+  const { tweet, setTweet } = useTweet();
   return (
     <div className="flex flex-col gap-8 items-center mt-32">
       <h1 className="text-5xl font-bold dark:text-white">
@@ -12,12 +30,17 @@ export default function Hero() {
       </h1>
       <div className="flex flex-col justify-between backdrop-blur-xl w-[62vw] rounded-2xl border dark:border-white/40 border-black/40 px-4 py-3 bg-white/10">
         <Textarea
+          ref={textareaRef}
           placeholder="Paste your tweet"
+          value={tweet}
+          onChange={(e) => {
+            setTweet(e.target.value);
+            adjustTextAreaHeight();
+          }}
           className="relative z-50 w-full resize-none border-0 focus:!ring-transparent focus:border-none focus:outline-none shadow-none font-medium dark:bg-transparent px-1"
           rows={1}
         />
         <div className="flex items-center justify-between">
-
           <div className="flex items-center gap-4">
             <Select>
               <SelectTrigger className="text-utility">
