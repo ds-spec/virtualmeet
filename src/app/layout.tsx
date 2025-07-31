@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import Sidebar from "@/components/Sidebar";
+import AppSidebar from "@/components/Sidebar";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -28,12 +31,19 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body
-        className={`${bricolage_grotesque.className} ${inter.variable} dark:bg-black bg-white antialiased`}
+        className={`${bricolage_grotesque.className} ${inter.variable} dark:bg-black bg-white antialiased overflow-hidden`}
       >
         <Providers>
-          <ImageToggler />
-          {children}
+          <SidebarProvider>
+            <AppSidebar />
+            <ImageToggler />
+            <main>
+              <SidebarTrigger />
+            </main>
+            {children}
+          </SidebarProvider>
         </Providers>
+
       </body>
     </html>
   );
