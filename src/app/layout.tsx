@@ -1,22 +1,24 @@
-
 import ImageToggler from "@/components/ImageToggler";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import Sidebar from "@/components/Sidebar";
 import AppSidebar from "@/components/Sidebar";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
-})
+});
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-})
-
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,21 +31,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <body
         className={`${bricolage_grotesque.className} ${inter.variable} dark:bg-black bg-white antialiased overflow-hidden`}
       >
         <Providers>
           <SidebarProvider>
-            <AppSidebar />
+            {/* <AppSidebar /> */}
             <ImageToggler />
-            <main>
-              <SidebarTrigger />
-            </main>
+            <main>{/* <SidebarTrigger /> */}</main>
             {children}
           </SidebarProvider>
         </Providers>
-
       </body>
     </html>
   );
