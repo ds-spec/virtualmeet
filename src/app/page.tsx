@@ -4,10 +4,14 @@ import Navbar from "@/components/Navbar";
 import Samples from "@/components/Samples";
 
 export default function Home() {
-  return <div className="w-full h-screen overflow-hidden">
-    <Navbar />
-    <Hero />
-    <Samples />
-    <Footer />
-  </div>;
+  return (
+    <div className="w-full h-screen overflow-x-hidden">
+      <Navbar />
+      <Hero />
+      <Samples />
+      <div className="flex justify-end">
+        <Footer />
+      </div>
+    </div>
+  );
 }
