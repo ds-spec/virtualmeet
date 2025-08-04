@@ -1,15 +1,13 @@
 import ImageToggler from "@/components/ImageToggler";
+import AppSidebar from "@/components/Sidebar";
+import {
+  SidebarProvider,
+  SidebarTrigger
+} from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import Sidebar from "@/components/Sidebar";
-import AppSidebar from "@/components/Sidebar";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -37,9 +35,11 @@ export default function RootLayout({
       >
         <Providers>
           <SidebarProvider>
-            {/* <AppSidebar /> */}
+            <AppSidebar />
             <ImageToggler />
-            <main>{/* <SidebarTrigger /> */}</main>
+            <main>
+              <SidebarTrigger className="cursor-pointer mt-2" />
+            </main>
             {children}
           </SidebarProvider>
         </Providers>
