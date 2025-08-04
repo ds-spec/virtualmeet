@@ -24,11 +24,11 @@ export default function Hero() {
   };
   const { tweet, setTweet } = useTweet();
   return (
-    <div className="flex flex-col gap-8 items-center mt-32 max-w-3xl mx-auto px-2">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight dark:text-white">
+    <div className="flex flex-col gap-8 items-center mt-32 w-full px-2">
+      <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight dark:text-white">
         What can I help you refine?
       </h1>
-      <div className="flex flex-col justify-between backdrop-blur-xl w-[62vw] sm:w-full lg:w-[62vw] rounded-lg border dark:border-white/40 border-black/40 px-4 py-3 bg-white/10">
+      <div className="flex flex-col justify-between backdrop-blur-xl w-full sm:w-full md:w-[85vw] lg:w-[80vw] xl:w-[62vw] rounded-lg border dark:border-white/40 border-black/40 px-4 py-3 bg-white/10">
         <Textarea
           ref={textareaRef}
           placeholder="Paste your tweet"
@@ -37,7 +37,7 @@ export default function Hero() {
             setTweet(e.target.value);
             adjustTextAreaHeight();
           }}
-          className="relative z-50 w-full resize-none border-0 focus:!ring-transparent focus:border-none focus:outline-none shadow-none font-medium dark:bg-transparent px-1 text-sm sm:text-base md:text-md lg:text-lg"
+          className="relative z-50 w-full resize-none border-0 focus:!ring-transparent focus:border-none focus:outline-none shadow-none font-medium dark:bg-transparent px-1 text-sm lg:text-md"
           rows={1}
         />
         <div className="flex items-center justify-between">

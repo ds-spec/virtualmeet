@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="fixed w-full flex flex-col justify-center mt-20 items-center gap-1">
+    <footer className="absolute bottom-8 mt-28 w-full flex flex-col justify-center items-center gap-1">
       <ul className="flex items-center gap-8 dark:text-gray-400">
         <li>
           <Link className="text-sm" href="#">
