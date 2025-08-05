@@ -25,7 +25,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
     user: {
       name: "deep",
       email: "deep@gmail.com",
-      image: "https://avatars.githubusercontent.com/u/12345678?v=4"
+      avatar: "https://avatars.githubusercontent.com/u/12345678?v=4"
     }
   }
   return (
