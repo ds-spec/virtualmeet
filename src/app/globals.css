@@ -139,3 +139,9 @@
   -webkit-backdrop-filter: none; /* Disable background filter for Safari */
   background-clip: padding-box; /* Ensure background fills button */
 }
+
+.text-clip {
+  background: linear-gradient(to left, rgb(78, 77, 77), rgb(184, 184, 184));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

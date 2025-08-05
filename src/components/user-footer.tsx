@@ -1,7 +1,7 @@
-import { ChevronsLeftIcon } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { DropdownMenu, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./ui/sidebar";
 
 interface UserProps {
   name: string;
@@ -9,6 +9,7 @@ interface UserProps {
   avatar: string;
 }
 export default function UserFooter({ user }: { user: UserProps }) {
+  const { isMobile } = useSidebar();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -25,6 +26,23 @@ export default function UserFooter({ user }: { user: UserProps }) {
               </div>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+          <DropdownMenuContent className="min-w-56 rounded-lg" align="start" sideOffset={4}>
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-1 px-1 py-1.5 text-left text-sm">
+                <Avatar className="h-4 w-4 rounded-full">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback className="rounded-full">DE</AvatarFallback>
+                </Avatar>
+                <div className="text-left text-sm text-gray-400/50 text-clip">
+                  {user.email}
+                </div>
+              </div>
+              <DropdownMenuItem className="cursor-pointer">
+                <LogOut />
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuLabel>
+          </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>

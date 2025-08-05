@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar, History, Home, Inbox, Search, Settings, SquarePen } from "lucide-react";
+import { Calendar, History, Home, Inbox, Search, SearchIcon, Settings, SquarePen } from "lucide-react";
 import Image from "next/image";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem } from "./ui/sidebar";
 import AIHeader from "./ai-header";
@@ -12,15 +12,20 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
   const items = {
     chatItems: [
       {
+        title: "New Chat",
+        url: "#",
+        logo: <SquarePen size={"1.4em"} />
+      },
+      {
+        title: "Search",
+        url: "#",
+        logo: <SearchIcon size={"1.4em"} />
+      },
+      {
         title: "History",
         url: "#",
         logo: <History size={"1.4em"} />
       },
-      {
-        title: "New Chat",
-        url: "#",
-        logo: <SquarePen size={"1.4em"} />
-      }
     ],
     user: {
       name: "deep",
