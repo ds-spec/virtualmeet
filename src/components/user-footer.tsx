@@ -1,7 +1,7 @@
 import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./ui/sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarTrigger, useSidebar } from "./ui/sidebar";
 
 interface UserProps {
   name: string;
@@ -15,7 +15,7 @@ export default function UserFooter({ user }: { user: UserProps }) {
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger className="cursor-pointer" asChild>
-            <SidebarMenuButton size="lg">
+            <SidebarMenuButton color="red" size="lg">
               <Avatar className="h-8 w-8 rounded-full">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">DE</AvatarFallback>
@@ -26,6 +26,7 @@ export default function UserFooter({ user }: { user: UserProps }) {
               </div>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+          <SidebarTrigger className="cursor-pointer mt-2" />
           <DropdownMenuContent className="min-w-56 rounded-lg" align="start" sideOffset={4}>
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-1 px-1 py-1.5 text-left text-sm">

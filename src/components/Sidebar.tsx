@@ -2,7 +2,7 @@
 
 import { Calendar, History, Home, Inbox, Search, SearchIcon, Settings, SquarePen } from "lucide-react";
 import Image from "next/image";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem } from "./ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarTrigger } from "./ui/sidebar";
 import AIHeader from "./ai-header";
 import ChatHistory from "./chat-history";
 import UserFooter from "./user-footer";
@@ -14,17 +14,17 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
       {
         title: "New Chat",
         url: "#",
-        logo: <SquarePen size={"1.4em"} />
+        logo: <SquarePen size={"1.6em"} />
       },
       {
         title: "Search",
         url: "#",
-        logo: <SearchIcon size={"1.4em"} />
+        logo: <SearchIcon size={"1.6em"} />
       },
       {
         title: "History",
         url: "#",
-        logo: <History size={"1.4em"} />
+        logo: <History size={"1.6em"} />
       },
     ],
     user: {

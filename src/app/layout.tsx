@@ -46,7 +46,6 @@ export default function RootLayout({
             <AppSidebar />
             <ImageToggler />
             <main>
-              <SidebarTrigger className="cursor-pointer mt-2" />
             </main>
             {children}
           </SidebarProvider>
