@@ -3,6 +3,8 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Samples from "@/components/Samples";
 
+
+
 export default function Home() {
   return (
     <div className="w-full h-screen overflow-x-hidden">

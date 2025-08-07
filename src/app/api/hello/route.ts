@@ -1,5 +1,9 @@
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+
+const prisma = new PrismaClient();
+console.log(prisma);
 
 type ResponseData = {
   message: string;
@@ -13,6 +17,7 @@ type Users = {
 const userSchema = z.object({
   name: z.string().min(1, { message: "name is required" }),
   email: z.email({ message: "email is invalid" }),
+  hasPassword: z.boolean().optional(),
 });
 
 export function GET() {
@@ -44,13 +49,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(errors, { status: 400 });
     }
 
-    const { name, email } = parsed.data;
+    const { name, email, hasPassword } = parsed.data;
 
-    const newUser = {
-      id: Date.now(),
-      name,
-      email,
-    };
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        hasPassword,
+      },
+    });
 
     return NextResponse.json(newUser, {
       status: 201,
