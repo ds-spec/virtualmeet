@@ -2,7 +2,7 @@
 
 import useTweet from "@/hooks/useTweet";
 import { Send } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -12,9 +12,13 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
+import { useSession } from "next-auth/react"
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isLoginModal, setIsLoginModal] = useState(false)
+  const { data } = useSession();
+  console.log(data)
   const adjustTextAreaHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
