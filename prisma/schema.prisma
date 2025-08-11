@@ -13,38 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model User {
-//   id           Int           @id @default(autoincrement())
-//   email        String        @unique
-//   name         String
-//   profileImage String
-//   corePrompt   String?
-//   interactions String
-//   Interaction  Interaction[]
-// }
-
-// // Interaction ka user id field , user table ke id se connected hai
-// model Interaction {
-//   id         String   @id @default(uuid())
-//   userPrompt String
-//   aiResponse String
-//   mood       String?
-//   action     String?
-//   createdAt  DateTime @default(now())
-//   userId     Int
-//   user       User     @relation(fields: [userId], references: [id])
-// }
-
 model User {
-  id         Int      @id @default(autoincrement())
-  profilePic String
-  status     String
-  Profile    Profile?
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  name         String?
+  profileImage String?
+  corePrompt   String?
+  interactions Interaction[]
 }
 
-model Profile {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id])
+// Interaction ka user id field , user table ke id se connected hai
+model Interaction {
+  id         String   @id @default(uuid())
+  userPrompt String
+  aiResponse String
+  mood       String?
+  action     String?
+  createdAt  DateTime @default(now())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
 }
