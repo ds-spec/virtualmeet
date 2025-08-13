@@ -97,7 +97,7 @@ export default function Hero() {
           </button>
         </div>
       </div>
-      <div className="w-full mt-2">
+      <div className="w-full sm:w-full md:w-[85vw] lg:w-[80vw] xl:w-[62vw] mt-2">
         <Typewriter text={result} />
       </div>
     </main>
