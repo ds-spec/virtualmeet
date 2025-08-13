@@ -2,7 +2,9 @@
 
 import useTweet from "@/hooks/useTweet";
 import { Send } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRef, useState } from "react";
+import Profile from "./Profile";
 import {
   Select,
   SelectContent,
@@ -12,7 +14,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
-import { useSession } from "next-auth/react"
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -32,6 +33,7 @@ export default function Hero() {
       <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight dark:text-white">
         What can I help you refine?
       </h1>
+      <Profile />
       <div className="flex flex-col justify-between backdrop-blur-xl w-full sm:w-full md:w-[85vw] lg:w-[80vw] xl:w-[62vw] rounded-lg border dark:border-white/40 border-black/40 px-4 py-3 bg-white/10">
         <Textarea
           ref={textareaRef}
