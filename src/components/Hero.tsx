@@ -97,6 +97,9 @@ export default function Hero() {
           </button>
         </div>
       </div>
+      <div className="w-full mt-2">
+        <Typewriter text={result} />
+      </div>
     </main>
   );
 }
