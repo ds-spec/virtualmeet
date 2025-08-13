@@ -14,12 +14,12 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
+import LoginModal from "./login-modal";
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [isLoginModal, setIsLoginModal] = useState(false)
-  const { data } = useSession();
-  console.log(data)
+  const [showLoginModal, setShowLoginModal] = useState(false)
+  const { data: session } = useSession();
   const adjustTextAreaHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -28,8 +28,17 @@ export default function Hero() {
     }
   };
   const { tweet, setTweet } = useTweet();
+
+  const handleGenerate = async () => {
+    if (!session) {
+      setShowLoginModal(true)
+      return;
+    }
+  }
+
   return (
-    <div className="flex flex-col gap-8 items-center mt-32 w-full px-2">
+    <main className="flex flex-col gap-8 items-center mt-32 w-full px-2">
+      {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} showLoginModal={showLoginModal} />}
       <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight dark:text-white">
         What can I help you refine?
       </h1>
@@ -86,6 +95,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
