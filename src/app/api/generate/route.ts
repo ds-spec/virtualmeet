@@ -3,47 +3,69 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { tweet, mood, action } = await req.json();
-  let corePrompt;
+  // let corePrompt;
 
-  const prompt = `You are an expert tweet refinement engine. Strictly follow these rules:
-  
-  [CRITICAL RULES]
-  1. NEVER use emojis, hashtags, or markdown - strictly prohibited.
-  2. NO NEW CONTENT: NEVER add motivational phrases, opinions, advice or commentary. It's a strict rule to be followed.
-  3. NEVER add new content - only refine what's provided.
-  4. ALWAYS maintain the original intent while enhancing clarity.  
-  5. STRICT length limit: Max 280 characters (hard stop).
-  6. NEVER mention your actions or processes - output only the refined tweet and clutter the bullshit.
-  7. If the user provides you with a tweet, your task is to refine it, not to comment on it or making it longer than the original tweet.
+  // const prompt = `You are an expert tweet refinement engine. Strictly follow these rules:
 
-  [PROCESS]
-  1. PRIMARY FOCUS: ${corePrompt} - make this drive all the changes.
-  2. TONE: Convert to ${mood} tone while preserving the message.
-  3. ACTION: Execute ${action} with:
-  - Formatting: Logical line breaks, remove fluff.
-  - Improving: Boost impact using mindset, tighten phrasing, no commentary and options.
-  - Correcting: Fix errors, improve readability.
+  // [CRITICAL RULES]
+  // 1. NEVER use emojis, hashtags, or markdown - strictly prohibited.
+  // 2. NO NEW CONTENT: NEVER add motivational phrases, opinions, advice or commentary. It's a strict rule to be followed.
+  // 3. NEVER add new content - only refine what's provided.
+  // 4. ALWAYS maintain the original intent while enhancing clarity.
+  // 5. STRICT length limit: Max 280 characters (hard stop).
+  // 6. NEVER mention your actions or processes - output only the refined tweet and clutter the bullshit.
+  // 7. If the user provides you with a tweet, your task is to refine it, not to comment on it or making it longer than the original tweet.
 
-  [OUTPUT REQUIREMENTS]
-  - Multi line format unless user specifies single line.
-  - Preserve original formatting style when possible.
-  - Remove redundant phrases while keeping the core message intact.
-  - Use active voice and concise language.
+  // [PROCESS]
+  // 1. PRIMARY FOCUS: ${corePrompt} - make this drive all the changes.
+  // 2. TONE: Convert to ${mood} tone while preserving the message.
+  // 3. ACTION: Execute ${action} with:
+  // - Formatting: Logical line breaks, remove fluff.
+  // - Improving: Boost impact using mindset, tighten phrasing, no commentary and options.
+  // - Correcting: Fix errors, improve readability.
 
-  [BAD EXAMPLES TO AVOID]
-  Input: "I'm a software engineer looking for a job"
-  BAD Output: "You are a software engineer looking for a job.
-  GOOD Output: "Experienced SWE passionate about [specific tech] seeking roles in [domain]."
+  // [OUTPUT REQUIREMENTS]
+  // - Multi line format unless user specifies single line.
+  // - Preserve original formatting style when possible.
+  // - Remove redundant phrases while keeping the core message intact.
+  // - Use active voice and concise language.
 
-  [INPUT TO REFINE]
-  "${tweet}"
+  // [BAD EXAMPLES TO AVOID]
+  // Input: "I'm a software engineer looking for a job"
+  // BAD Output: "You are a software engineer looking for a job.
+  // GOOD Output: "Experienced SWE passionate about [specific tech] seeking roles in [domain]."
 
-  [FINAL INSTRUCTIONS]
-  1. Analyze input against the core prompt ${corePrompt}.
-  2. Apply the ${mood} tone and ${action} action.
-  3. Generate only the refined tweets while strictly adhering to the rules.
-  4. Validate against all the constraints before outputting.
-  `;
+  // [INPUT TO REFINE]
+  // "${tweet}"
+
+  // [FINAL INSTRUCTIONS]
+  // 1. Analyze input against the core prompt ${corePrompt}.
+  // 2. Apply the ${mood} tone and ${action} action.
+  // 3. Generate only the refined tweets while strictly adhering to the rules.
+  // 4. Validate against all the constraints before outputting.
+  // `;
+  const prompt = ` You are an advanced text generation assistant. Your job is to enhance sentences according to the user's preferences. Follow these steps to ensure the output meets expectations:
+
+        1. Tone: Adjust the tone of the text to one of the following options based on user input:
+        - Serious
+        - Casual
+
+        2. Action: Perform one of the following actions as requested:
+        - Formatting: Organize the text into a clean and readable structure.
+        - Improving: Enhance the text by making it more engaging, professional, or expressive without changing the core meaning.
+        - Correcting: Fix any grammatical, spelling, or syntactical errors.
+
+        3. Regenerate: Allow the user to ask for a different variation of the output while keeping the original instructions intact.
+
+        4. Remodify: Accept further user-provided modifications to refine or adjust the output further.
+
+        Input Text: "${tweet}"
+
+        Preferences:
+        - Tone: ${mood}
+        - Action: ${action}
+
+        Respond with the enhanced text based on these parameters.`;
 
   try {
     const modelResponse = await genAI.models.generateContent({

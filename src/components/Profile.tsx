@@ -3,7 +3,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Grid } from "lucide-react";
+import { Grip } from "lucide-react";
 import Link from "next/link";
 
 export default function Profile() {
@@ -17,7 +17,7 @@ export default function Profile() {
             <AvatarImage src="/profile.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-        ) : <Grid />}
+        ) : <Grip size={"1.2em"} className="cursor-pointer dark:text-white hover:scale-110 transition-transform duration-300" />}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {session?.user ? (
