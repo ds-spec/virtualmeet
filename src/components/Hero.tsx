@@ -17,11 +17,13 @@ import { Textarea } from "./ui/textarea";
 import LoginModal from "./login-modal";
 import axios from "axios";
 import Typewriter from "./Typewriter";
+import useResult from "@/hooks/useResult";
+import { toast } from "sonner";
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [mood, setMood] = useState('Casual');
-  const [result, setResult] = useState('')
+
   const [action, setAction] = useState('Formatting')
   const [showLoginModal, setShowLoginModal] = useState(false)
   const { data: session } = useSession();
@@ -33,6 +35,7 @@ export default function Hero() {
     }
   };
   const { tweet, setTweet } = useTweet();
+  const { result, setResult } = useResult();
 
   const handleGenerate = async () => {
     const response = await axios.post('/api/generate', { tweet, mood, action })
