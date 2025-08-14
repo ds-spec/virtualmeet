@@ -3,7 +3,7 @@
 import useTweet from "@/hooks/useTweet";
 import { Send } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Profile from "./Profile";
 import {
   Select,
@@ -16,16 +16,17 @@ import {
 import { Textarea } from "./ui/textarea";
 import LoginModal from "./login-modal";
 import axios from "axios";
-import Typewriter from "./Typewriter";
 import useResult from "@/hooks/useResult";
 import { toast } from "sonner";
+import Result from "./Result";
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [mood, setMood] = useState('Casual');
-
-  const [action, setAction] = useState('Formatting')
-  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [improvePrompt, setImprovePrompt] = useState('');
+  const [isImprovingField, setIsImprovingField] = useState(false);
+  const [action, setAction] = useState('Formatting');
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const { data: session } = useSession();
   const adjustTextAreaHeight = () => {
     const textarea = textareaRef.current;
@@ -40,6 +41,26 @@ export default function Hero() {
   const handleGenerate = async () => {
     const response = await axios.post('/api/generate', { tweet, mood, action })
     setResult(response.data.message)
+  }
+
+  const handleRegenerate = async () => {
+    if (!improvePrompt && !isImprovingField) {
+      setIsImprovingField(true)
+      return
+    }
+    if (isImprovingField && !improvePrompt) {
+      setIsImprovingField(false)
+      return
+    }
+    const response = await axios.post('/api/improve', { result, mood, action, improvePrompt, tweet })
+    setResult(response.data.text)
+    setImprovePrompt('')
+    setIsImprovingField(false)
+  }
+
+  const copyToClipboard = () => {
+    if (!result) return
+    navigator.clipboard.writeText(result)
   }
 
   return (
@@ -101,7 +122,8 @@ export default function Hero() {
         </div>
       </div>
       <div className="w-full sm:w-full md:w-[85vw] lg:w-[80vw] xl:w-[62vw] mt-2">
-        <Typewriter text={result} />
+        {/* <Typewriter text={result} /> */}
+        <Result improvePrompt={improvePrompt} handleRegenerate={handleRegenerate} isImprovingField={isImprovingField} copyToClipboard={copyToClipboard} setImprovePrompt={setImprovePrompt} />
       </div>
     </main>
   );
