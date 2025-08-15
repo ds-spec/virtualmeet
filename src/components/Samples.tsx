@@ -2,11 +2,13 @@
 import { ArrowUpRight } from "lucide-react";
 import { samples } from "../../constants/samples";
 import useTweet from "@/hooks/useTweet";
+import useResult from "@/hooks/useResult";
 
 export default function Samples() {
   const { setTweet } = useTweet();
+  const { result } = useResult();
   return (
-    <div className="w-full px-4 max-w-4xl mx-auto">
+    <div className={`w-full px-4 max-w-4xl mx-auto ${result ? "hidden" : ""}`}>
       <div className="flex flex-col md:flex-row flex-wrap items-center justify-center mt-10 gap-4">
         {samples.map((sample, idx) => (
           <button

@@ -28,9 +28,8 @@
 //   );
 // }
 
-import { useEffect, useState } from 'react';
-import { ShineBorder } from './ui/shine-border';
-
+import { useEffect, useState } from "react";
+import { ShineBorder } from "./ui/shine-border";
 
 interface TypeWriterProps {
   text: string;
@@ -38,14 +37,14 @@ interface TypeWriterProps {
 }
 
 export default function TypeWriter({ text, speed = 50 }: TypeWriterProps) {
-  const [displayedText, setDisplayedText] = useState('');
+  const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (currentIndex < text.length) {
       const timer = setTimeout(() => {
-        setDisplayedText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
+        setDisplayedText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
       }, speed);
 
       return () => clearTimeout(timer);
@@ -53,16 +52,14 @@ export default function TypeWriter({ text, speed = 50 }: TypeWriterProps) {
   }, [currentIndex, text, speed]);
 
   useEffect(() => {
-    setDisplayedText('');
+    setDisplayedText("");
     setCurrentIndex(0);
   }, [text]);
 
   return (
-    <div className="relative rounded-lg py-4 px-5 backdrop-blur-lg bg-white/10 dark:shadow-xl whitespace-pre-wrap">
-      <ShineBorder
-        shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-      />
-      <span className=''>{displayedText}</span>
+    <div className="relative rounded-md py-4 px-5 backdrop-blur-lg bg-white/10 dark:shadow-xl whitespace-pre-wrap">
+      <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+      <span className="tracking-tight">{displayedText}</span>
     </div>
   );
-} 
+}

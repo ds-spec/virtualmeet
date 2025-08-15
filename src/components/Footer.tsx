@@ -1,8 +1,15 @@
+"use client";
+import useResult from "@/hooks/useResult";
 import Link from "next/link";
 
 export default function Footer() {
+  const { result } = useResult();
   return (
-    <footer className="absolute bottom-8 mt-28 w-full flex flex-col justify-center items-center gap-1">
+    <footer
+      className={`absolute bottom-8 mt-28 w-full flex flex-col justify-center items-center gap-1 ${
+        result ? "hidden" : ""
+      }`}
+    >
       <ul className="flex items-center gap-8 dark:text-gray-400">
         <li>
           <Link className="text-sm" href="#">
