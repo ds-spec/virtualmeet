@@ -27,6 +27,7 @@
 //     </div>
 //   );
 // }
+"use client";
 
 import { useEffect, useState } from "react";
 import { ShineBorder } from "./ui/shine-border";
@@ -37,6 +38,7 @@ interface TypeWriterProps {
 }
 
 export default function TypeWriter({ text, speed = 50 }: TypeWriterProps) {
+  console.log(text, speed);
   const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -59,7 +61,7 @@ export default function TypeWriter({ text, speed = 50 }: TypeWriterProps) {
   return (
     <div className="relative rounded-md py-4 px-5 backdrop-blur-lg bg-white/10 dark:shadow-xl whitespace-pre-wrap">
       <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-      <span className="tracking-tight">{displayedText}</span>
+      <span className="tracking-tight text-sm">{displayedText}</span>
     </div>
   );
 }

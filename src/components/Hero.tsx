@@ -22,10 +22,10 @@ import Result from "./Result";
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [mood, setMood] = useState('Casual');
-  const [improvePrompt, setImprovePrompt] = useState('');
+  const [mood, setMood] = useState("Casual");
+  const [improvePrompt, setImprovePrompt] = useState("");
   const [isImprovingField, setIsImprovingField] = useState(false);
-  const [action, setAction] = useState('Formatting');
+  const [action, setAction] = useState("Formatting");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { data: session } = useSession();
   const adjustTextAreaHeight = () => {
@@ -39,33 +39,44 @@ export default function Hero() {
   const { result, setResult } = useResult();
 
   const handleGenerate = async () => {
-    const response = await axios.post('/api/generate', { tweet, mood, action })
-    setResult(response.data.message)
-  }
+    const response = await axios.post("/api/generate", { tweet, mood, action });
+    setResult(response.data.message);
+  };
 
   const handleRegenerate = async () => {
     if (!improvePrompt && !isImprovingField) {
-      setIsImprovingField(true)
-      return
+      setIsImprovingField(true);
+      return;
     }
     if (isImprovingField && !improvePrompt) {
-      setIsImprovingField(false)
-      return
+      setIsImprovingField(false);
+      return;
     }
-    const response = await axios.post('/api/improve', { result, mood, action, improvePrompt, tweet })
-    setResult(response.data.text)
-    setImprovePrompt('')
-    setIsImprovingField(false)
-  }
+    const response = await axios.post("/api/improve", {
+      result,
+      mood,
+      action,
+      improvePrompt,
+      tweet,
+    });
+    setResult(response.data.message);
+    setImprovePrompt("");
+    setIsImprovingField(false);
+  };
 
   const copyToClipboard = () => {
-    if (!result) return
-    navigator.clipboard.writeText(result)
-  }
+    if (!result) return;
+    navigator.clipboard.writeText(result);
+  };
 
   return (
     <main className="flex flex-col gap-8 items-center mt-32 w-full px-2">
-      {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} showLoginModal={showLoginModal} />}
+      {showLoginModal && (
+        <LoginModal
+          onClose={() => setShowLoginModal(false)}
+          showLoginModal={showLoginModal}
+        />
+      )}
       <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight dark:text-white">
         What can I help you refine?
       </h1>
@@ -116,14 +127,23 @@ export default function Hero() {
               </SelectContent>
             </Select>
           </div>
-          <button className="bg-transparent border dark:border-white/20 p-2 rounded-lg dark:hover:bg-neutral-600/20 cursor-pointer transition-colors duration-300 hover:bg-neutral-300/20" onClick={handleGenerate}>
+          <button
+            className="bg-transparent border dark:border-white/20 p-2 rounded-lg dark:hover:bg-neutral-600/20 cursor-pointer transition-colors duration-300 hover:bg-neutral-300/20"
+            onClick={handleGenerate}
+          >
             <Send size={"1.1em"} />
           </button>
         </div>
       </div>
       <div className="w-full sm:w-full md:w-[85vw] lg:w-[80vw] xl:w-[62vw] mt-2">
         {/* <Typewriter text={result} /> */}
-        <Result improvePrompt={improvePrompt} handleRegenerate={handleRegenerate} isImprovingField={isImprovingField} copyToClipboard={copyToClipboard} setImprovePrompt={setImprovePrompt} />
+        <Result
+          improvePrompt={improvePrompt}
+          handleRegenerate={handleRegenerate}
+          isImprovingField={isImprovingField}
+          copyToClipboard={copyToClipboard}
+          setImprovePrompt={setImprovePrompt}
+        />
       </div>
     </main>
   );

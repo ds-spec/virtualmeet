@@ -1,3 +1,4 @@
+"use client";
 import useResult from "@/hooks/useResult";
 import { ResultProps } from "@/types/ResultProps";
 import Image from "next/image";
@@ -21,8 +22,9 @@ export default function Result({
   copyToClipboard,
 }: ResultProps) {
   const { result } = useResult();
+  console.log(result, "Result");
   return (
-    <div
+    <section
       className={`flex flex-col gap-2 w-full p-3 ${
         result ? "block" : "hidden"
       }`}
@@ -32,17 +34,25 @@ export default function Result({
           onChange={(e) => setImprovePrompt(e.target.value)}
           type="text"
           value={improvePrompt}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleRegenerate();
+            }
+          }}
           placeholder="Follow up"
           className={`text-white text-xs ${
             isImprovingField
-              ? "w-[30vw] border dark:border-white/20"
-              : "w-[30vw]"
-          } bg-white/5 rounded-lg backdrop-blur-lg transition-all duration-100 dark:focus:border-white/20 focus:outline-none px-3`}
+              ? "w-[30vw] border dark:border-white/20 px-3"
+              : "w-0"
+          } bg-white/5 rounded-lg backdrop-blur-lg transition-all duration-100 dark:focus:border-white/20 focus:outline-none `}
         />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <ShinyButton className="p-2 hover:scale-105 cursor-pointer border hover:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-xl">
+              <ShinyButton
+                onClick={handleRegenerate}
+                className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg"
+              >
                 <WandSparkles size={"0.9em"} />
               </ShinyButton>
             </TooltipTrigger>
@@ -54,7 +64,7 @@ export default function Result({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <button className="p-2 hover:scale-105 cursor-pointer border hover:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-xl">
+              <button className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg">
                 <Heart fill="#fff" size={"0.9em"} />
               </button>
             </TooltipTrigger>
@@ -66,7 +76,7 @@ export default function Result({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <button className="p-2 hover:scale-105 cursor-pointer border hover:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-xl">
+              <button className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg">
                 <TwitterIcon size={"0.9em"} />
               </button>
             </TooltipTrigger>
@@ -78,7 +88,7 @@ export default function Result({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <button className="p-2 hover:scale-105 cursor-pointer border hover:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-xl">
+              <button className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg">
                 <Clipboard size={"0.9em"} />
               </button>
             </TooltipTrigger>
@@ -89,6 +99,6 @@ export default function Result({
         </TooltipProvider>
       </div>
       <TypeWriter text={result} speed={30} />
-    </div>
+    </section>
   );
 }
