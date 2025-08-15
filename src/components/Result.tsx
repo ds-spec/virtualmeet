@@ -40,7 +40,7 @@ export default function Result({
             }
           }}
           placeholder="Follow up"
-          className={`text-white text-xs ${
+          className={`dark:text-white text-xs ${
             isImprovingField
               ? "w-[30vw] border dark:border-white/20 px-3"
               : "w-0"

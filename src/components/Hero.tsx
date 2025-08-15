@@ -15,16 +15,18 @@ import {
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import LoginModal from "./login-modal";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import useResult from "@/hooks/useResult";
 import { toast } from "sonner";
 import Result from "./Result";
+import { ApiResponse } from "@/lib/ApiResponse";
 
 export default function Hero() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [mood, setMood] = useState("Casual");
   const [improvePrompt, setImprovePrompt] = useState("");
   const [isImprovingField, setIsImprovingField] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [action, setAction] = useState("Formatting");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { data: session } = useSession();
@@ -39,8 +41,20 @@ export default function Hero() {
   const { result, setResult } = useResult();
 
   const handleGenerate = async () => {
-    const response = await axios.post("/api/generate", { tweet, mood, action });
-    setResult(response.data.message);
+    try {
+      const response = await axios.post<ApiResponse>("/api/generate", {
+        tweet,
+        mood,
+        action,
+      });
+      setIsGenerating(true);
+      setResult(response.data.message);
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>;
+      toast.error(
+        axiosError.response?.data.message ?? "Failed to generate the tweet"
+      );
+    }
   };
 
   const handleRegenerate = async () => {
@@ -52,16 +66,25 @@ export default function Hero() {
       setIsImprovingField(false);
       return;
     }
-    const response = await axios.post("/api/improve", {
-      result,
-      mood,
-      action,
-      improvePrompt,
-      tweet,
-    });
-    setResult(response.data.message);
-    setImprovePrompt("");
-    setIsImprovingField(false);
+    try {
+      const response = await axios.post<ApiResponse>("/api/improve", {
+        result,
+        mood,
+        action,
+        improvePrompt,
+        tweet,
+      });
+      setResult(response.data.message);
+      setImprovePrompt("");
+      setIsImprovingField(false);
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>;
+      toast.error(
+        axiosError.response?.data.message ?? "Failed to refine the tweet"
+      );
+      console.log(axiosError);
+    } finally {
+    }
   };
 
   const copyToClipboard = () => {
