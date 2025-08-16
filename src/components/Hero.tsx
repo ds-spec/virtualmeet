@@ -1,7 +1,7 @@
 "use client";
 
 import useTweet from "@/hooks/useTweet";
-import { Send } from "lucide-react";
+import { LucideStopCircle, Send } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import Profile from "./Profile";
@@ -30,6 +30,7 @@ export default function Hero() {
   const [action, setAction] = useState("Formatting");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { data: session } = useSession();
+  console.log(isGenerating, "generating");
   const adjustTextAreaHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -41,19 +42,21 @@ export default function Hero() {
   const { result, setResult } = useResult();
 
   const handleGenerate = async () => {
+    setIsGenerating(true);
     try {
       const response = await axios.post<ApiResponse>("/api/generate", {
         tweet,
         mood,
         action,
       });
-      setIsGenerating(true);
       setResult(response.data.message);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.error(
         axiosError.response?.data.message ?? "Failed to generate the tweet"
       );
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -66,6 +69,7 @@ export default function Hero() {
       setIsImprovingField(false);
       return;
     }
+    setIsGenerating(true);
     try {
       const response = await axios.post<ApiResponse>("/api/improve", {
         result,
@@ -82,14 +86,16 @@ export default function Hero() {
       toast.error(
         axiosError.response?.data.message ?? "Failed to refine the tweet"
       );
-      console.log(axiosError);
     } finally {
+      setIsGenerating(false);
     }
   };
 
   const copyToClipboard = () => {
+    console.log(result, "proceedingresults");
     if (!result) return;
     navigator.clipboard.writeText(result);
+    toast.success("Text copied to clipboard!");
   };
 
   return (
@@ -154,7 +160,11 @@ export default function Hero() {
             className="bg-transparent border dark:border-white/20 p-2 rounded-lg dark:hover:bg-neutral-600/20 cursor-pointer transition-colors duration-300 hover:bg-neutral-300/20"
             onClick={handleGenerate}
           >
-            <Send size={"1.1em"} />
+            {isGenerating ? (
+              <LucideStopCircle size={"1.1em"} className="animate-pulse" />
+            ) : (
+              <Send size={"1.1em"} />
+            )}
           </button>
         </div>
       </div>

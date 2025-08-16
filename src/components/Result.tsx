@@ -1,9 +1,8 @@
 "use client";
 import useResult from "@/hooks/useResult";
 import { ResultProps } from "@/types/ResultProps";
-import Image from "next/image";
 import { ShinyButton } from "./ui/shiny-button";
-import { Clipboard, Heart, TwitterIcon, WandSparkles, X } from "lucide-react";
+import { Clipboard, Heart, TwitterIcon, WandSparkles } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,8 +10,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import TypeWriter from "./Typewriter";
-
-// { improvePrompt, isImprovingField, setImprovePrompt, handleRegenerate, copyToClipboard }: ResultProps
+import Link from "next/link";
 
 export default function Result({
   improvePrompt,
@@ -22,6 +20,7 @@ export default function Result({
   copyToClipboard,
 }: ResultProps) {
   const { result } = useResult();
+
   console.log(result, "Result");
   return (
     <section
@@ -75,11 +74,13 @@ export default function Result({
         </TooltipProvider>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
-              <button className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg">
-                <TwitterIcon size={"0.9em"} />
-              </button>
-            </TooltipTrigger>
+            <Link href={`https://twitter.com/intent/tweet?text=${result}`}>
+              <TooltipTrigger>
+                <button className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg">
+                  <TwitterIcon size={"0.9em"} />
+                </button>
+              </TooltipTrigger>
+            </Link>
             <TooltipContent>
               <p>Share on X</p>
             </TooltipContent>
@@ -88,7 +89,10 @@ export default function Result({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <button className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg">
+              <button
+                onClick={copyToClipboard}
+                className="p-2 hover:scale-105 cursor-pointer border hover:dark:border-white/40 rounded-sm transition-all duration-300 bg-white/5 backdrop-blur-lg before:bg-white/5 shadow-lg"
+              >
                 <Clipboard size={"0.9em"} />
               </button>
             </TooltipTrigger>
