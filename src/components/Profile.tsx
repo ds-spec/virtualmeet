@@ -1,19 +1,18 @@
 'use client';
 
-import { signIn, signOut, useSession } from "next-auth/react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Grip } from "lucide-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 export default function Profile() {
   const { data: session } = useSession();
-  console.log(session, "profiless")
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         {session?.user ? (
-          <Avatar>
+          <Avatar className="cursor-pointer">
             <AvatarImage src="/profile.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
@@ -22,8 +21,8 @@ export default function Profile() {
       <DropdownMenuContent>
         {session?.user ? (
           <>
-            <Link href="/history"><DropdownMenuItem>History</DropdownMenuItem></Link>
-            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
+            <Link href="/history"><DropdownMenuItem className="cursor-pointer">History</DropdownMenuItem></Link>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>Logout</DropdownMenuItem>
           </>
         ) :
           <DropdownMenuItem onClick={() => signIn('google')}>Sign In

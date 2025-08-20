@@ -24,9 +24,8 @@ export default function Result({
   console.log(result, "Result");
   return (
     <section
-      className={`flex flex-col gap-2 w-full p-3 ${
-        result ? "block" : "hidden"
-      }`}
+      className={`flex flex-col gap-2 w-full p-3 ${result ? "block" : "hidden"
+        }`}
     >
       <div className="flex justify-end gap-2 relative">
         <input
@@ -39,11 +38,10 @@ export default function Result({
             }
           }}
           placeholder="Follow up"
-          className={`dark:text-white text-xs ${
-            isImprovingField
+          className={`dark:text-white text-xs ${isImprovingField
               ? "w-[30vw] border dark:border-white/20 px-3"
               : "w-0"
-          } bg-white/5 rounded-lg backdrop-blur-lg transition-all duration-100 dark:focus:border-white/20 focus:outline-none `}
+            } bg-white/5 rounded-lg backdrop-blur-lg transition-all duration-100 dark:focus:border-white/20 focus:outline-none `}
         />
         <TooltipProvider>
           <Tooltip>

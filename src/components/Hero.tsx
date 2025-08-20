@@ -22,13 +22,17 @@ import Result from "./Result";
 import { ApiResponse } from "@/lib/ApiResponse";
 
 export default function Hero() {
+  const moodRef = useRef("Casual");
+  const actionRef = useRef("Formatting");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const [mood, setMood] = useState("Casual");
   const [improvePrompt, setImprovePrompt] = useState("");
   const [isImprovingField, setIsImprovingField] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [action, setAction] = useState("Formatting");
   const [showLoginModal, setShowLoginModal] = useState(false);
+
   const { data: session } = useSession();
   console.log(isGenerating, "generating");
   const adjustTextAreaHeight = () => {
@@ -50,6 +54,7 @@ export default function Hero() {
         action,
       });
       setResult(response.data.message);
+      setTweet('');
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.error(
@@ -130,7 +135,7 @@ export default function Hero() {
                   className="dark:text-white text-sm md:text-md lg:text-lg"
                 />
               </SelectTrigger>
-              <SelectContent className="dark:text-white text-black backdrop-blur-lg border dark:border-white/20">
+              <SelectContent onValueChange={(value: string) => moodRef.current = value} className="dark:text-white text-black backdrop-blur-lg border dark:border-white/20">
                 <SelectGroup>
                   <SelectItem value="funny">Funny</SelectItem>
                   <SelectItem value="serious">Serious</SelectItem>
