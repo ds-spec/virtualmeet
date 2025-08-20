@@ -1,14 +1,15 @@
-'use client'
-
-import { Calendar, History, Home, Inbox, Search, SearchIcon, Settings, SquarePen } from "lucide-react";
-import Image from "next/image";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarTrigger } from "./ui/sidebar";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { History, SearchIcon, SquarePen } from "lucide-react";
+import { getServerSession } from "next-auth";
 import AIHeader from "./ai-header";
 import ChatHistory from "./chat-history";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "./ui/sidebar";
 import UserFooter from "./user-footer";
 
-export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  console.log(props)
+export async function AppSidebar() {
+  const session = await getServerSession(authOptions);
+  console.log(session, "session in sidebar");
+  if (!session?.user) return null;
   const items = {
     chatItems: [
       {
@@ -34,7 +35,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
     }
   }
   return (
-    <Sidebar className="bg-transparent" collapsible="icon" {...props}>
+    <Sidebar className="bg-transparent" collapsible="icon">
       <SidebarHeader>
         <AIHeader />
       </SidebarHeader>

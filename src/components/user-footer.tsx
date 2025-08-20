@@ -1,3 +1,5 @@
+'use client'
+
 import { LogOut } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";

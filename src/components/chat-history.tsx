@@ -1,6 +1,6 @@
-import { History, LucideIcon, Search } from "lucide-react";
+'use client'
+
 import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./ui/sidebar";
-import { Input } from "./ui/input";
 
 interface ItemsProps {
   title: string;

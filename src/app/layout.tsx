@@ -1,11 +1,11 @@
 import ImageToggler from "@/components/ImageToggler";
-import AppSidebar from "@/components/Sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/Sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 import Providers from "./providers";
-import { Toaster } from "sonner";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
