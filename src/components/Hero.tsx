@@ -4,7 +4,6 @@ import useTweet from "@/hooks/useTweet";
 import { LucideStopCircle, Send } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
-import Profile from "./Profile";
 import {
   Select,
   SelectContent,
@@ -20,18 +19,18 @@ import useResult from "@/hooks/useResult";
 import { toast } from "sonner";
 import Result from "./Result";
 import { ApiResponse } from "@/lib/ApiResponse";
+import { useUsageTracker } from "@/hooks/useUsageTracker";
 
 export default function Hero() {
   const moodRef = useRef("Casual");
   const actionRef = useRef("Formatting");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const [mood, setMood] = useState("Casual");
   const [improvePrompt, setImprovePrompt] = useState("");
   const [isImprovingField, setIsImprovingField] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [action, setAction] = useState("Formatting");
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const { incrementUsage, resetUsage, isLimitReached } = useUsageTracker();
 
   const { data: session } = useSession();
   console.log(isGenerating, "generating");
@@ -46,15 +45,20 @@ export default function Hero() {
   const { result, setResult } = useResult();
 
   const handleGenerate = async () => {
+    if (!session && isLimitReached) {
+      setShowLoginModal(true);
+      return;
+    }
     setIsGenerating(true);
     try {
       const response = await axios.post<ApiResponse>("/api/generate", {
         tweet,
-        mood,
-        action,
+        mood: moodRef.current,
+        action: actionRef.current,
       });
       setResult(response.data.message);
-      setTweet('');
+      incrementUsage();
+      setTweet("");
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.error(
@@ -78,8 +82,8 @@ export default function Hero() {
     try {
       const response = await axios.post<ApiResponse>("/api/improve", {
         result,
-        mood,
-        action,
+        mood: moodRef.current,
+        action: actionRef.current,
         improvePrompt,
         tweet,
       });
@@ -102,6 +106,12 @@ export default function Hero() {
     navigator.clipboard.writeText(result);
     toast.success("Text copied to clipboard!");
   };
+
+  useEffect(() => {
+    if (session) {
+      resetUsage();
+    }
+  }, [session, resetUsage]);
 
   return (
     <main className="flex flex-col gap-8 items-center mt-32 w-full px-2">
@@ -128,14 +138,16 @@ export default function Hero() {
         />
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Select>
+            <Select
+              onValueChange={(value: string) => (moodRef.current = value)}
+            >
               <SelectTrigger className="text-utility">
                 <SelectValue
                   placeholder="Casual"
                   className="dark:text-white text-sm md:text-md lg:text-lg"
                 />
               </SelectTrigger>
-              <SelectContent onValueChange={(value: string) => moodRef.current = value} className="dark:text-white text-black backdrop-blur-lg border dark:border-white/20">
+              <SelectContent className="dark:text-white text-black backdrop-blur-lg border dark:border-white/20">
                 <SelectGroup>
                   <SelectItem value="funny">Funny</SelectItem>
                   <SelectItem value="serious">Serious</SelectItem>
@@ -145,7 +157,9 @@ export default function Hero() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Select>
+            <Select
+              onValueChange={(value: string) => (actionRef.current = value)}
+            >
               <SelectTrigger className="text-utility">
                 <SelectValue
                   placeholder="Formatting"
