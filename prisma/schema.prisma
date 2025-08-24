@@ -33,3 +33,8 @@ model Interaction {
   userId     Int
   user       User     @relation(fields: [userId], references: [id])
 }
+
+model UserIP {
+  id        String @id @default(uuid())
+  ipAddress String
+}
